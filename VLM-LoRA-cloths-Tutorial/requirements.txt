@@ -1,0 +1,16 @@
+kagglehub
+pillow 
+transformers
+datasets
+accelerate
+evaluate
+trl
+peft
+qwen-vl-utils
+datasets
+load_dotenv
+json_repair
+scikit-learn
+tensorboard 
+wandb
+seaborn
