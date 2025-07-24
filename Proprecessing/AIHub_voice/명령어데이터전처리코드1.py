@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
+import os
 import json
 import pandas as pd
 from pathlib import Path
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import os
 
 def parse_json_file(file_path):
     """단일 JSON 파일을 파싱하여 필요한 필드를 추출"""
@@ -28,12 +28,12 @@ def parse_json_file(file_path):
         print(f"Error parsing {file_path}: {e}")
         return None
 
-def find_label_folders(validation_path):
+def find_label_folders(data_path):
     """Validation 폴더에서 모든 [라벨] 폴더를 찾기"""
-    validation_dir = Path(validation_path)
+    validation_dir = Path(data_path)
     
     if not validation_dir.exists():
-        print(f"Validation 폴더가 존재하지 않습니다: {validation_path}")
+        print(f"Validation 폴더가 존재하지 않습니다: {data_path}")
         return []
     
     # [라벨]로 시작하는 폴더들 찾기
@@ -44,11 +44,11 @@ def find_label_folders(validation_path):
     
     return label_folders
 
-def extract_all_validation_data(validation_path, max_workers=4):
+def extract_all_data(data_path, max_workers=4):
     """Validation 폴더의 모든 라벨 데이터를 추출"""
     
-    print(f"Validation 폴더 스캔 중: {validation_path}")
-    label_folders = find_label_folders(validation_path)
+    print(f"Validation 폴더 스캔 중: {data_path}")
+    label_folders = find_label_folders(data_path)
     
     if not label_folders:
         print("라벨 폴더를 찾을 수 없습니다.")
@@ -90,13 +90,13 @@ def extract_all_validation_data(validation_path, max_workers=4):
     print(f"✅ 총 {len(results)}개 데이터 추출 완료!")
     return results
 
-def save_results(results, validation_path, format='csv'):
+def save_results(results, data_path, format='csv'):
     """결과를 파일로 저장"""
     if not results:
         print("저장할 데이터가 없습니다.")
         return
     
-    validation_dir = Path(validation_path)
+    validation_dir = Path(data_path)
 
     
     if format == 'csv':
@@ -137,20 +137,20 @@ def show_statistics(results):
 
 def main():
     # 사용자 설정
-    validation_path = "."
+    data_path = "."
     
     # 데이터 추출
-    results = extract_all_validation_data(validation_path, max_workers=8)
+    results = extract_all_data(data_path, max_workers=8)
     
     if results:
         # 통계 출력
         show_statistics(results)
         
         # 결과 저장
-        save_results(results, validation_path, format='csv')
+        save_results(results, data_path, format='csv')
         
         print(f"\n🎉 완료! {len(results)}개 데이터가 추출되었습니다.")
-        print(f"📁 저장 위치: {validation_path}")
+        print(f"📁 저장 위치: {data_path}")
         
         # 샘플 데이터 미리보기
         print(f"\n👀 샘플 데이터:")
