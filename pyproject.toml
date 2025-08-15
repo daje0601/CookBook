@@ -6,7 +6,14 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "async-openai>=0.0.52",
+    "datasets>=4.0.0",
+    "librosa>=0.11.0",
     "openai-agents>=0.2.3",
+    "pandas>=2.3.1",
+    "scikit-learn>=1.7.1",
+    "soundfile>=0.13.1",
+    "torch>=2.8.0",
+    "torchcodec>=0.6.0",
 ]
 
 [dependency-groups]
