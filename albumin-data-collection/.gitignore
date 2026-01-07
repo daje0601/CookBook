@@ -1,0 +1,11 @@
+# 환경변수 파일 (API 키 포함)
+.env
+
+# 출력 데이터
+output/
+*.csv
+*.json
+
+# Python
+__pycache__/
+*.pyc
